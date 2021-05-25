@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header'
+import TaskList from './components/TaskList'
+import AddTask from './components/AddTask'
+import {useState} from 'react'
+
+
+const mockTasks = [
+  {
+    id:1,
+    text: 'task1',
+    date: 'today',
+    reminder: true
+  },
+  {
+    id:2,
+    text: 'task2',
+    date: 'yesterday',
+    reminder: false
+  }
+]
 
 function App() {
+  const tasks = useState(mockTasks)
+  const [,setTasks] = tasks;
+  const [showAdd,setShowAdd] = useState(false)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <button onClick={()=>setShowAdd(showAdd=>!showAdd)}>
+        Add Task
+      </button>
+      {showAdd && <AddTask onAdd={task=>setTasks(tasks=>[...tasks,task])}/>}
+      <TaskList tasks={tasks}/>
     </div>
   );
 }
