@@ -1,7 +1,7 @@
 .AddTask * {
    text-align: left;
 }
-.AddTask {
+.AddTask,.AddTask-CheckBox > input  {
   margin:.5em;
 }
 .AddTask > input[type = "text"] {
@@ -15,9 +15,6 @@
 }
 .AddTask-CheckBox > * {
   flex-grow: 0;
-}
-.AddTask-CheckBox > input {
-  margin:.5em;
 }
 .AddTask > input[type="submit"] {
   border-style: none;
