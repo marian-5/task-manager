@@ -42,16 +42,14 @@ const removeItem = (setArray, index) => setArray(
 
 const TaskList = ({tasksMut:[tasks,setTasks]}) => {
   return (
-    <ol>{
+    <ul className='flex'>{
       tasks.map((task,index)=>(
-        <li key = {task.id}>
-          <Task
-            task={[task, setItem(setTasks,index)]}
-            onDelete={()=>removeItem(setTasks,index)}
-          />
-        </li>
+        <Task key = {task.id}
+          task={[task, setItem(setTasks,index)]}
+          onDelete={()=>removeItem(setTasks,index)}
+        />    
       ))
-    }</ol>
+    }</ul>
   )
 }
 export default TaskList

@@ -1,7 +1,6 @@
 import TasksManager from './components/TaskManager'
 import {useState} from 'react'
 
-
 const mockTasks = [
   {
     id:1,

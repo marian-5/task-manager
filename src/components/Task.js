@@ -1,24 +1,23 @@
 import {Fragment} from 'react'
+import {} from './Task.css'
 
 
 const Task = ({task:[task,setTask], onDelete}) => {
   
   return (
-    <Fragment>
-      <p>{task.text}</p>
-      <p>{task.date}</p>
-      {task.reminder && <p> Remainder set </p>}
-      <button 
+    <li
+      className={'row gray Task '
+      + (task.reminder ? 'Task-reminder' : "")}
       onClick={()=>setTask({...task,reminder:!task.reminder})}
-      >
-        toggle reminder
-      </button>
-      <button
-       onClick={()=>onDelete(task)}
-      >
-        delete
-      </button>
-    </Fragment>
+    >
+      <div className='Task-info'>
+        <p className='Task-text'>{task.text}</p>
+        <p className='Task-date'>{task.date}</p>
+      </div>
+      <button className='Task-delete' onClick={()=>onDelete(task)}>
+        X
+      </button>    
+    </li>
   )
 }
 

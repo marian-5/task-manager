@@ -1,0 +1,22 @@
+.TaskManager > header {
+  flex-direction: row;
+  flex-grow:initial;
+}
+.TaskManager > header > h1 {
+  text-align: left;
+  font-size: 2em;
+  margin: .5em;
+}
+.TaskManager > header > button {
+  border-style: none;
+  border-radius: .5em;
+  flex-grow: 0;
+  margin: .5em;
+  padding: .5em;
+}
+.TaskManager > ul {
+  flex-grow: initial;
+}
+.TaskManager {
+  flex-flow: column;
+}

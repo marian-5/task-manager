@@ -1,4 +1,5 @@
 import {useState,Fragment} from 'react'
+import {} from './AddTask.css'
 
 const TextBox = ({label,placeholder = '',value:[value,setValue]}) => {return(
   <Fragment>
@@ -12,14 +13,14 @@ const TextBox = ({label,placeholder = '',value:[value,setValue]}) => {return(
   </Fragment>
 )}
 const CheckBox = ({label, value:[value,setValue]}) => (
-  <Fragment>
+  <div className="AddTask-CheckBox">
     {label !== undefined && <label>{label}</label>}
     <input
       type='checkbox'
       checked={value}
       onChange={e=>setValue(e.target.checked)}
     />
-  </Fragment>
+  </div>
 )
 
 const AddTasks = ({onAdd}) => {
@@ -31,7 +32,7 @@ const AddTasks = ({onAdd}) => {
     onAdd({text,date,reminder})
   }
   return(
-    <form onSubmit={onSubmit}>
+    <form className='AddTask' onSubmit={onSubmit}>
       <TextBox
         label = 'Task:'
         value = {text}

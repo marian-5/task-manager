@@ -1,0 +1,34 @@
+.Task-text {
+  font-size: 2em;
+  flex-grow: 2;
+}
+.Task-date {
+  flex-grow: 1;
+}
+.Task-text,.Task-date {
+  text-align: left;
+}
+.Task {
+  flex-grow:0;
+  padding: .5em;
+  border-radius: .5em;
+  margin: .25em;
+}
+.Task-delete {
+  flex-grow:0;
+  align-self:center;
+  width: 2em;
+  height: 2em;
+  margin: 1em;
+  font-weight: bold;
+  border-style: solid;
+  border-radius: 1em;
+  border-color: teal;
+  color: teal;
+  background-color: transparent;
+}
+.Task-delete:hover{
+  color: red;
+  border-color: red;
+}
+
