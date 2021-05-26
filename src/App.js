@@ -1,6 +1,4 @@
-import Header from './components/Header'
-import TaskList from './components/TaskList'
-import AddTask from './components/AddTask'
+import TasksManager from './components/TaskManager'
 import {useState} from 'react'
 
 
@@ -20,18 +18,10 @@ const mockTasks = [
 ]
 
 function App() {
-  const tasks = useState(mockTasks)
-  const [,setTasks] = tasks;
-  const [showAdd,setShowAdd] = useState(false)
+  const tasksMut = useState(mockTasks)
   return (
-    <div className='container'>
-      <button onClick={()=>setShowAdd(showAdd=>!showAdd)}>
-        Add Task
-      </button>
-      {showAdd && <AddTask onAdd={task=>setTasks(tasks=>[...tasks,task])}/>}
-      <TaskList tasks={tasks}/>
-    </div>
-  );
+    <TasksManager tasksMut={tasksMut}/>
+  )
 }
 
 export default App;

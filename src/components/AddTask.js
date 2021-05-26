@@ -1,33 +1,49 @@
-import {useState} from 'react'
+import {useState,Fragment} from 'react'
+
+const TextBox = ({label,placeholder = '',value:[value,setValue]}) => {return(
+  <Fragment>
+    {label !== undefined && <label>{label}</label> }
+    <input
+      type='text'
+      value={value}
+      placeholder={placeholder}
+      onChange={e=>setValue(e.target.value)}
+    />
+  </Fragment>
+)}
+const CheckBox = ({label, value:[value,setValue]}) => (
+  <Fragment>
+    {label !== undefined && <label>{label}</label>}
+    <input
+      type='checkbox'
+      checked={value}
+      onChange={e=>setValue(e.target.checked)}
+    />
+  </Fragment>
+)
 
 const AddTasks = ({onAdd}) => {
-  const [text,setText] = useState('')
-  const [date,setDate] = useState('')
-  const [reminder,setReminder] = useState(false)
+  const text = useState('')
+  const date = useState('')
+  const reminder = useState(false)
   const onSubmit = e => {
     e.preventDefault()
     onAdd({text,date,reminder})
   }
   return(
     <form onSubmit={onSubmit}>
-      <label>Task:</label>
-      <input
-        type='text'
-        value={text}
+      <TextBox
+        label = 'Task:'
+        value = {text}
         placeholder='description'
-        onChange={e=>setText(e.target.value)}
       />
-      <label>{'Date & Time:'}</label>
-      <input
-        type='text'
-        value={date}
-        onChange={e=>setDate(e.target.value)}
+      <TextBox
+        label = {'Date & Time'}
+        value = {date}
       />
-      <label>Set Reminder:</label>
-      <input
-        type='checkbox'
-        checked={reminder}
-        onChange={e=>setReminder(e.target.checked)}
+      <CheckBox
+        label = 'Set Reminder:'
+        value = {reminder}
       />
       <input type='submit' value='Add task'/>
     </form>
