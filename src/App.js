@@ -1,7 +1,13 @@
 import TasksManager from './components/TaskManager'
 import {useState} from 'react'
 
-const mockTasks = [
+function * mapIter(gen,fn) {
+  for (const value of gen) {
+    yield fn(value)
+  }
+}
+
+const mockTasks = new Map(mapIter([
   {
     id:1,
     text: 'task1',
@@ -14,10 +20,17 @@ const mockTasks = [
     date: 'yesterday',
     reminder: false
   }
-]
+][Symbol.iterator](), task => [task.id, task]))
 
 function App() {
-  const tasksMut = useState(mockTasks)
+  const [tasks,setTasks] = useState(mockTasks)
+  const tasksMut = [tasks,tasks2tasks=>setTasks(tasks => {
+    console.assert(tasks2tasks instanceof Function)
+    console.log('oldTasks',tasks);
+    const newTasks = tasks2tasks(tasks);
+    console.log('newTasks',newTasks);
+    return newTasks
+  })]
   return (
     <TasksManager tasksMut={tasksMut}/>
   )

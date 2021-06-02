@@ -1,21 +1,6 @@
 import Task from './Task'
+import immMap from '../immMap'
 
-//mutates a copy of the array and returns the result
-const mutateCopy = (arr,f) => {
-  const copy = [...arr];
-  f(copy)
-  return copy
-}
-//replaces an item in the array
-const withReplaced = (arr,index,val) => mutateCopy(
-  arr,
-  arr => arr[index] = val
-)
-//removes an item in the array
-const withRemoved = (arr,index) => mutateCopy(
-  arr,
-  arr => arr.splice(index,1)
-)
 //reacts setters are overloaded so i guess i need to overload mine too
 const overloadSetter = updateValue => f => (
   f instanceof Function 
@@ -31,25 +16,39 @@ const projectSetter = (setOuter,get,set) => overloadSetter(
     }
   )
 )
-const setItem = (setArray, index) => projectSetter(
-  setArray,
-  arr=>arr[index],
-  (arr,val)=>withReplaced(arr,index,val)
+const setItem = (setMap, key) => projectSetter(
+  setMap,
+  map=>map.get(key),
+  (map,val)=>immMap.set(map,key,val)
 )
-const removeItem = (setArray, index) => setArray(
-  array=>withRemoved(array,index)
+const removeItem = (setMap, key) => setMap(
+  map=>{
+    const newTasks = immMap.delete(map,key)
+    console.log('removeItem',newTasks);
+    return newTasks
+  }
 )
 
 const TaskList = ({tasksMut:[tasks,setTasks]}) => {
+  const setLogTasks = fn => setTasks(tasks => {
+    console.log('TasksList','old',tasks)
+    const newTasks = fn(tasks)
+    console.log('TaskList','new',newTasks)
+    return newTasks
+  })
   return (
-    <ul>{
-      tasks.map((task,index)=>(
-        <Task key = {task.id}
-          task={[task, setItem(setTasks,index)]}
-          onDelete={()=>removeItem(setTasks,index)}
-        />    
-      ))
-    }</ul>
-  )
-}
+  <ul>{
+    Array.from(tasks.values(),(task)=>
+      <Task
+        key = {task.id}
+        task = {[task,setItem(setLogTasks,task.id)]}
+        onDelete={()=>{
+          console.log('onDelete',task);
+          removeItem(setLogTasks,task.id)
+        }}
+      />    
+    )
+  }</ul>
+)}
+
 export default TaskList

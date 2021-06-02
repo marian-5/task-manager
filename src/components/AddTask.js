@@ -23,13 +23,14 @@ const CheckBox = ({label, value:[value,setValue]}) => (
   </div>
 )
 
-const AddTasks = ({onAdd}) => {
+const AddTasks = ({onAdd, generateId}) => {
   const text = useState('')
   const date = useState('')
   const reminder = useState(false)
   const onSubmit = e => {
     e.preventDefault()
-    onAdd({text,date,reminder})
+    onAdd({text,date,reminder,id:generateId()})
+    
   }
   return(
     <form className='AddTask' onSubmit={onSubmit}>

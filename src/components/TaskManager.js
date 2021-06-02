@@ -2,6 +2,7 @@ import AddTask from './AddTask'
 import TaskList from './TaskList'
 import {useState} from 'react'
 import {} from './TaskManager.css'
+import immMap from '../immMap'
 
 const Toggle = ({valueMut:[,setValue], children}) => (
   <button onClick={()=>setValue(value=>!value)}>
@@ -12,8 +13,13 @@ const Toggle = ({valueMut:[,setValue], children}) => (
 const TaskManager = ({ tasksMut }) => {
   const showAddMut = useState(false)
   const [showAdd,] = showAddMut
-  const [,setTasks] = tasksMut
-
+  const [tasks,setTasks] = tasksMut
+  const tasksLogMut = [tasks,fn=>setTasks(tasks => {
+    console.log('oldTasks TaskManager',tasks)
+    const newTasks = fn(tasks)
+    console.log('new tasks TaskManager',newTasks)
+    return newTasks
+  })]
   return (
     <div className='teal TaskManager'>
       <header>
@@ -24,10 +30,11 @@ const TaskManager = ({ tasksMut }) => {
       </header>
       {showAdd && (
         <AddTask
-          onAdd={task=>setTasks(tasks=>[...tasks,task])}
+          onAdd={task=>{console.log('onAdd');setTasks(tasks=>immMap.set(tasks,task.id,task))}}
+          generateId={()=>Math.floor(Math.random()*10000)}
         />
       )}
-      <TaskList tasksMut={tasksMut}/>
+      <TaskList tasksMut={tasksLogMut}/>
     </div>
   )
 }
